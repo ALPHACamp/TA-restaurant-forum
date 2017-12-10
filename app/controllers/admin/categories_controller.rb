@@ -1,14 +1,12 @@
 class Admin::CategoriesController < Admin::BaseController
-  before_action :set_category, only: [:update, :destroy]
+  before_action :set_category, only: [:show, :edit, :update, :destroy]
 
   def index
     @categories = Category.all
+  end
 
-    if params[:id]
-      set_category
-    else
-      @category = Category.new
-    end
+  def new
+    @category = Category.new
   end
 
   def create
@@ -17,9 +15,14 @@ class Admin::CategoriesController < Admin::BaseController
      flash[:notice] = "category was successfully created"
      redirect_to admin_categories_path
    else
-     @categories = Category.all
-     render :index
+     render :new
    end
+  end
+
+  def show
+  end
+
+  def edit
   end
 
   def update
@@ -27,8 +30,7 @@ class Admin::CategoriesController < Admin::BaseController
       flash[:notice] = "category was successfully updated"
       redirect_to admin_categories_path
     else
-      @categories = Category.all
-      render :index
+      render :edit
     end
   end
 
